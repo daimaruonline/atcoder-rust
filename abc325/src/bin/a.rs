@@ -1,10 +1,10 @@
+#![allow(non_snake_case)]
 use proconio::input;
 
 fn main() {
     input!{
-        a: u32,
-        b: u32,
+        S: String,
+        _T: String,
     }
-    let c: u32 = a * b;
-    println!("{}", c);
+    println!("{} san", S);
 }
