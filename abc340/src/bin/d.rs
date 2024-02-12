@@ -1,5 +1,6 @@
 #![allow(non_snake_case)]
 use proconio::input;
+use std::collections::BinaryHeap;
 
 fn main() {
     input!{
@@ -16,41 +17,41 @@ fn main() {
         edge[i].push((X-1, B));
     }
 
-    let mut d = vec![usize::max_value(); N];
-    d[0] = 0;
-    let mut p: Vec<isize> = vec![-1; N];
+    let mut d = vec![isize::max_value(); N];
+    let mut bh = BinaryHeap::new();
     let mut ok: Vec<isize> = vec![-1; N];
-    let mut min_node = 0;
-    loop {
-        let mut min_cost = usize::max_value();
-        for i in 0..N {
-            if ok[i] != 1 && d[i] < min_cost {
-                min_cost = d[i];
-                min_node = i;
-            }
+
+    d[0] = 0;
+    bh.push((0, 0));
+    ok[0] = 0;
+
+    let mut count = 0;
+    while !bh.is_empty() {
+        let f = bh.pop().unwrap();
+        let u = f.1;
+        ok[u] = 1;
+        if d[u] < f.0 * (-1) {
+            continue;
         }
 
-        if min_cost == usize::max_value() {
-            break;
-        }
-        ok[min_node] = 1;
-
-        for &e in &edge[min_node] {
-            let v = e.0;
-            if ok[v] != 1 {
-                if d[min_node] + e.1 < d[v] {
-                    d[v] = d[min_node] + e.1;
-                    p[v] = min_node as isize;
-                    ok[v] = 0;
+        for v in edge[u].iter() {
+            if ok[v.0] != 1 {
+                if d[v.0] > d[u] + v.1 as isize {
+                    d[v.0] = d[u] + v.1 as isize;
+                    bh.push((d[v.0]*(-1), v.0));
+                    ok[v.0] = 0;
                 }
             }
         }
 
         // println!("# loop:{}", count);
         // for i in 0..N {
-        //     println!(" edge:{} d:{} p:{} ok:{}", i, d[i], p[i], ok[i]);
+        //     println!(" edge:{} d:{} ok:{}", i, d[i], ok[i]);
         // }
-        // count++;
+        // for b in &bh {
+        //     println!(" BH: ({}, {})", b.0, b.1);
+        // }
+        // count+=1;
     }
 
     println!("{}", d[N-1]);
