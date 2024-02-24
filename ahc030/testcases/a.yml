@@ -1,0 +1,12 @@
+---
+type: Batch
+timelimit: ~
+match: Lines
+
+cases: []
+
+extend:
+  - type: Text
+    path: "./tools"
+    in: /in/0000.txt
+    out: /out/0000.txt
