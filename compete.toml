@@ -24,14 +24,20 @@ test-suite = "{{ manifest_dir }}/testcases/{{ bin_alias }}.yml"
 src = '''
 #![allow(non_snake_case)]
 use proconio::input;
+// use proconio::marker::Bytes;
+// use proconio::marker::Chars;
+// use itertools::Itertools;
+// use std::collections::BinaryHeap;
+// use std::collections::HashSet;
+// use std::collections::HashMap;
 
 fn main() {
     input!{
-        a: u32,
-        b: u32,
+        N: usize,
+        A: [usize; N],
+        S: Chars,
     }
-    let c: u32 = a * b;
-    println!("{}", c);
+    println!("{}", N);
 }
 '''
 
